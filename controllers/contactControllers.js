@@ -1,11 +1,13 @@
+const asyncHandler = require("express-async-handler") // don't  want to use try catch black insted we can use this 
+
 // @desc Get all contacts 
 // @route GET //api/contacts
 // @access public
 
 
-const getContact = (req, res) => {
+const getContact = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Get all contacts" })
-}
+})
 
 
 
@@ -14,15 +16,15 @@ const getContact = (req, res) => {
 // @access public
 
 
-const postContact = (req, res) => {
+const postContact = asyncHandler(async (req, res) => {
     console.log(req.body)
-    const {name, age, phone} = req.body
-    if(!name || !age || !phone){
-        res.status(400).json({message:"required fileds are missing"})
-        // throw new Error("All fileds are mandatory")
+    const { name, age, phone } = req.body
+    if (!name || !age || !phone) {
+        res.status(400)
+        throw new Error("All fileds are mandatory")
     }
     res.status(200).json({ message: `Create all contacts ${req.params.id}` });
-}
+})
 
 
 
@@ -31,9 +33,9 @@ const postContact = (req, res) => {
 // @access public
 
 
-const updateContact = (req, res) => {
+const updateContact = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Update all contacts" });
-}
+})
 
 
 
@@ -42,8 +44,8 @@ const updateContact = (req, res) => {
 // @access public
 
 
-const deleteContact = (req, res) => {
+const deleteContact = asyncHandler(async (req, res) => {
     res.status(200).json({ message: `delete all contacts ${req.params.id}` });
-}
+})
 
 module.exports = { getContact, postContact, updateContact, deleteContact }
